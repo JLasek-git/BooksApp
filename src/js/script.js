@@ -58,17 +58,37 @@ function initActions(){
     if(event.target.tagName == 'INPUT' && event.target.type == 'checkbox' && event.target.name == 'filter'){
       if(event.target.checked){
         filters.push(event.target.value);
-
+        filterBooks();
       } else {
         const indexOfValue = filters.indexOf(event.target.value);
         filters.splice(indexOfValue, 1);
-
+        filterBooks();
       }
+
     }
   });
-
 }
 
+
+function filterBooks(){
+  for(const book in dataSource.books) {
+    let shouldBeHidden = false;
+    for(const filter of filters){
+      if(dataSource.books[book].details[filter]){
+        shouldBeHidden = true;
+        break;
+      }
+    }
+    const bookId = dataSource.books[book].id;
+    const thisBook = bookContainer.querySelector('.book__image[data-id="' + bookId + '"]');
+
+    if(shouldBeHidden){
+      thisBook.classList.add('hidden');
+    } else {
+      thisBook.classList.remove('hidden');
+    }
+  }
+}
 
 
 for(const book in dataSource.books){
