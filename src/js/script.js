@@ -19,12 +19,26 @@ const favoriteBooks = [];
 const filters = [];
 
 function renderBook(bookData){
+  const ratingValue = bookData.rating * 10;
+  // console.log(ratingValue);
   const generatedHTML = templates.singleBook(bookData);
   // console.log(generatedHTML);
 
   const element = utils.createDOMFromHTML(generatedHTML);
   // console.log(element);
 
+  const ratingBar = element.querySelector('.book__rating__fill');
+  console.log(ratingBar);
+
+  if(bookData.rating < 6) {
+    ratingBar.style.background = "linear-gradient(to right, orange "+ ratingValue +"%, transparent " + ratingValue + "%)";
+  } else if(bookData.rating > 6 && bookData.rating <= 8){
+    ratingBar.style.background = "linear-gradient(to right, greenyellow "+ ratingValue +"%, transparent " + ratingValue + "%)";
+  } else if(bookData.rating > 8 && bookData.rating <= 9) {
+    ratingBar.style.background = "linear-gradient(to right, green "+ ratingValue +"%, transparent " + ratingValue + "%)";
+  } else {
+    ratingBar.style.background = "linear-gradient(to right, red "+ ratingValue +"%, transparent " + ratingValue + "%)";
+  }
   // console.log(bookContainer);
 
   bookContainer.appendChild(element);
