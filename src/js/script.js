@@ -1,3 +1,4 @@
+
 const select = {
   templateOf: {
     book: '#template-book',
@@ -13,7 +14,9 @@ const templates = {
 };
 
 const bookContainer = document.querySelector(select.containerOf.book);
+const filterForm = document.querySelector('.filters form');
 const favoriteBooks = [];
+const filters = [];
 
 function renderBook(bookData){
   const generatedHTML = templates.singleBook(bookData);
@@ -51,13 +54,29 @@ function initActions(){
     }
   });
 
+  filterForm.addEventListener('click', function(event){
+    if(event.target.tagName == 'INPUT' && event.target.type == 'checkbox' && event.target.name == 'filter'){
+      if(event.target.checked){
+        filters.push(event.target.value);
+
+      } else {
+        const indexOfValue = filters.indexOf(event.target.value);
+        filters.splice(indexOfValue, 1);
+
+      }
+    }
+  });
+
 }
+
+
 
 for(const book in dataSource.books){
   renderBook(dataSource.books[book]);
 }
 
 initActions();
+
 
 
 
