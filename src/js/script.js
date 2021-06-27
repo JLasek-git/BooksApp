@@ -143,9 +143,6 @@ class BooksList {
 
 const app = new BooksList();
 
-
-
-
-
+console.log(app);
 
 
